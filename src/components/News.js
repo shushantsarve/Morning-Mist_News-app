@@ -18,7 +18,7 @@ const News = (props) => {
 
     const updateNews = async () => {
         props.setProgress(10);
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apikey=226cb84b76db43dcb0b55516711accb2&page=${page}&pageSize=${props.pageSize}`;
+        const url = `https://newsdata.io/api/1/news?apikey=pub_159762382799484f8db98c7c04a8422ce3596&country=${props.country}&category=${props.category}&language=en`;
         setLoading(true);
         let data = await fetch(url);
         props.setProgress(45);
@@ -40,7 +40,7 @@ const News = (props) => {
 
     const fetchMoreData = async () => {
         setPage(page + 1);
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apikey=226cb84b76db43dcb0b55516711accb2&page=${page + 1}&pageSize=${props.pageSize}`;
+        const url = `https://newsdata.io/api/1/news?apikey=pub_159762382799484f8db98c7c04a8422ce3596&country=${props.country}&category=${props.category}&language=en`;
         let data = await fetch(url);
         let parsedData = await data.json();
 
@@ -64,8 +64,8 @@ const News = (props) => {
                 <div className="container">
                     <div className="row">
                         {articles.map((element) => {
-                            return <div className="col-md-4" key={element.url} >
-                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} />
+                            return <div className="col-md-4" key={element.link} >
+                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.image_url} newsUrl={element.link} author={element.source_id} date={element.pubDate} />
                             </div>
                         })}
                     </div>
@@ -80,7 +80,7 @@ const News = (props) => {
 News.deafultProps = {
     country: 'in',
     pageSize: 8,
-    category: 'general'
+    category: 'top'
 }
 
 News.propTypes = {
